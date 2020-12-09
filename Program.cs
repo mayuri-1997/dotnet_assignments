@@ -4,34 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inheritance_assign
+namespace day1_assign
 {
     class Program
     {
-        static void Main()
-        {
-
-        }
+        
     }
 
-    public abstract class Employee
+    class Employee
     {
-        protected static int lastEmpNo = 0;
-        protected string name;
-        protected int empno;
-        protected short deptno;
-        protected decimal basic;
-        public abstract decimal Basic
-        {
-            set;
-            get;
-        }
-
+        private static int lastEmpNo = 0;
+        private string name;
         public string Name
         {
             set
             {
-                if (value != null)
+                if(value != null)
                 {
                     name = value;
                 }
@@ -42,19 +30,27 @@ namespace Inheritance_assign
                 return name;
             }
         }
-
-        public int EmpNo
+        private decimal basic;
+        public decimal Basic
         {
-            private set
+            set
             {
-                empno = value;
+                if (value > 10 && value < 123450)
+                {
+                    basic = value;
+                }
+                else
+                    Console.WriteLine("Basic must be in range 10 to 50 ");
+
+
+
             }
             get
             {
-                return empno;
+                return basic;
             }
         }
-
+        private short deptno;
         public short DeptNo
         {
             set
@@ -65,131 +61,54 @@ namespace Inheritance_assign
                 }
                 else
                     Console.WriteLine("Dept No must be grater than 0 and less than 128");
-
             }
             get
             {
                 return deptno;
             }
+
         }
-        
-
-        public abstract decimal CalculateNetSalary();
-
-        public Employee(string name = "nothing", decimal basic = 10000, short deptno = 10)
+        private int empNo;
+        public int EmpNo
         {
-            empno = ++lastEmpNo;
+            get
+            {
+                return empNo;
+            }
+            private set
+            {
+                empNo = value;
+            }
+        }
+
+        //Methods
+        public decimal getNetSalary()
+        {
+            decimal netsal;
+            netsal = basic + 4000 + 1000;//BASIC+DA+TA Fixed
+            return netsal;
+        }
+
+
+        Employee(string name="nothing",decimal basic=10000,short deptno=10)
+        {
+            empNo = ++lastEmpNo;
             this.name = name;
             this.basic = basic;
             this.deptno = deptno;
 
         }
-    }
 
-
-
-        public class Manager : Employee
+        static void Main()
         {
-
-            public override decimal Basic
-        {
-            set
-            {
-                basic = value;
-            }
-            get
-            {
-                return basic;
-            }
-        }
-            protected string designation;
-            public string Designation
-            {
-                set
-                {
-                    if (value != null)
-                    {
-                        designation = value;
-                    }
-                }
-                get
-                {
-                    return designation;
-                }
-            }
-            public override decimal CalculateNetSalary()
-            {
-                decimal netsal;
-                netsal = basic + 4000 + 1000;//BASIC+DA+TA Fixed
-                return netsal;
-            }
-
-       public Manager(string name = "nothing", decimal basic = 10000, short deptno = 10, string designation="clerk"):base(name,basic,deptno)
-        {
-            this.designation = designation;
+            Employee e = new Employee();
+            Console.WriteLine(e.empNo);
+            Employee e1 = new Employee();
+            Console.WriteLine(e1.empNo);
+            Console.WriteLine(e.getNetSalary());
+            Console.ReadLine();
+            
 
         }
     }
-
-        public class GenralManager : Manager
-        {
-
-        public override decimal Basic
-        {
-            set
-            {
-                basic = value;
-            }
-            get
-            {
-                return basic;
-            }
-        }
-
-        protected string perks;
-            public string Perks
-            {
-                set
-                {
-                    perks = value;
-                }
-                get
-                {
-                    return perks;
-                }
-            }
-
-        public GenralManager(string name = "nothing", decimal basic = 10000, short deptno = 10, string designation = "clerk",string perks="noname"):base(name,basic,deptno,designation)
-        {
-            empno = ++lastEmpNo;
-            this.perks = perks;
-
-        }
-    }
-
-
-        public class CEO : Employee
-        {
-            public override decimal Basic
-        {
-            set
-            {
-                basic = value;
-            }
-            get
-            {
-                return basic;
-            }
-        }
-            public sealed override decimal CalculateNetSalary()
-            {
-                decimal netsal;
-                netsal = basic + 4000 + 1000;//BASIC+DA+TA Fixed
-                return netsal;
-            }
-        }
-
-        
-
-    }
-
+}
